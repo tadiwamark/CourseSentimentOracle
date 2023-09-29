@@ -3,7 +3,7 @@ import openai
 from preprocessing import preprocess_text  # Assume you have a separate module for preprocessing
 
 # Initialize OpenAI API
-openai.api_key = 'YOUR-API-KEY'
+openai.api_key = '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'
 
 def analyze_sentiment(text):
     response = openai.Completion.create(
