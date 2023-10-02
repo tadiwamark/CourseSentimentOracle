@@ -27,7 +27,7 @@ def analyze_sentiment(text):
 def main():
     st.title('Advanced NLP Sentiment Analysis App')
     st.sidebar.header('About App')
-    st.sidebar.write('This app uses advanced NLP models to analyze sentiments of student reviews.')
+    st.sidebar.write('This app uses advanced NLP models (GPT 3.5 Turbo) to analyze sentiments of student reviews.')
 
     if openai.api_key:
         user_input = st.text_area("Enter the review:")
