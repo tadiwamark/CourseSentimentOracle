@@ -26,9 +26,7 @@ def analyze_sentiment(review_text):
         }
         
         return sentiment_result, additional_features
-        
-     except openai.error.OpenAIError as e:
-         return f"Error: {e}", None
+    
 
 
 def additional_nlp_features(features):
