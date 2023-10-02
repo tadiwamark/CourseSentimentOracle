@@ -44,33 +44,33 @@ def main():
                 st.warning("Review field is empty!")
     
     elif page == 'Analysis':
-    st.title('Real-time Review Analysis')
-    
-    if session_state.reviews:
-        selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(session_state.reviews))), format_func=lambda x: session_state.reviews[x])
-        selected_review = session_state.reviews[selected_review_index]
+        st.title('Real-time Review Analysis')
         
-        if st.button("Analyze Review"):
-            if openai.api_key:
-                conversation = [
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
-                ]
-                
-                try:
-                    response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",
-                        messages=conversation,
-                        temperature=0.5,
-                        max_tokens=100
-                    )
-                    st.write("OpenAI's Response:", response['choices'][0]['message']['content'])
-                except openai.error.OpenAIError as e:
-                    st.error(f"Error: {e}")
-            else:
-                st.error("OpenAI API Key is missing. Please enter the API Key.")
-    else:
-        st.warning('No reviews have been submitted yet!')
+        if session_state.reviews:
+            selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(session_state.reviews))), format_func=lambda x: session_state.reviews[x])
+            selected_review = session_state.reviews[selected_review_index]
+            
+            if st.button("Analyze Review"):
+                if openai.api_key:
+                    conversation = [
+                        {"role": "system", "content": "You are a helpful assistant."},
+                        {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
+                    ]
+                    
+                    try:
+                        response = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo",
+                            messages=conversation,
+                            temperature=0.5,
+                            max_tokens=100
+                        )
+                        st.write("OpenAI's Response:", response['choices'][0]['message']['content'])
+                    except openai.error.OpenAIError as e:
+                        st.error(f"Error: {e}")
+                else:
+                    st.error("OpenAI API Key is missing. Please enter the API Key.")
+        else:
+            st.warning('No reviews have been submitted yet!')
 
         
     elif page == 'Advanced Analysis':
