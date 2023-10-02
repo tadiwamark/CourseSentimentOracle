@@ -27,7 +27,7 @@ def main():
         if st.session_state.api_key:
             openai.api_key = st.session_state.api_key
     else:
-        openai.api_key = session_state.api_key
+        openai.api_key = st.session_state.api_key
 
     # Define Page Layout
     st.sidebar.header('Navigation')
