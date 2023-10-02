@@ -1,29 +1,28 @@
 import openai
-import spacy
-import RAKE
 
-# Load SpaCy model
-nlp = spacy.load('en_core_web_sm')
 
-# Setup RAKE
-rake = RAKE.Rake(RAKE.SmartStopList())
-
-def analyze_sentiment(text):
-    # Replace with actual OpenAI API call for Sentiment Analysis.
+def analyze_sentiment(review_text):
+    """Mock Sentiment Analysis. Replace with actual sentiment analysis logic."""
     response = openai.Completion.create(
-        engine="gpt-3.5-turbo", 
-        prompt=f"This is a review: {text}. The sentiment of this review is:", 
-        temperature=0, 
-        max_tokens=60
+        engine="gpt-3.5-turbo",
+        prompt=f"This is a review: '{review_text}'. The sentiment of this review is:",
+        temperature=0.5,
+        max_tokens=100
     )
-    sentiment_result = response.choices[0].text.strip()
+    sentiment_result = response.choices[0].text.strip()  # For example "Positive"
     
-    # Extracting Keywords using RAKE
-    extracted_keywords = [keyword[0] for keyword in rake.run(text, maxWords=3, minFrequency=2)]
-    
-    # Named Entity Recognition using SpaCy
-    doc = nlp(text)
-    entities = [ent.text for ent in doc.ents]
-    
-    additional_features = {'keywords': extracted_keywords, 'entities': entities}
+    # Here, you can perform additional NLP tasks like keyword extraction, named entity recognition, etc.
+    additional_features = {
+        "keywords": ["Example", "Keyword"],
+        "entities": ["Example", "Entity"]
+    }
     return sentiment_result, additional_features
+
+
+def additional_nlp_features(features):
+    """Display additional NLP features."""
+    st.subheader("Extracted Keywords:")
+    st.write(", ".join(features.get("keywords", [])))
+    
+    st.subheader("Recognized Entities:")
+    st.write(", ".join(features.get("entities", [])))
