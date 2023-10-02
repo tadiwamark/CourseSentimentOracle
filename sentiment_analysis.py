@@ -1,9 +1,12 @@
 import openai
 import spacy
-from gensim.summarization import keywords as extract_keywords
+import RAKE
 
 # Load SpaCy model
 nlp = spacy.load('en_core_web_sm')
+
+# Setup RAKE
+rake = RAKE.Rake(RAKE.SmartStopList())
 
 def analyze_sentiment(text):
     # Replace with actual OpenAI API call for Sentiment Analysis.
@@ -15,8 +18,8 @@ def analyze_sentiment(text):
     )
     sentiment_result = response.choices[0].text.strip()
     
-    # Extracting Keywords using Gensim
-    extracted_keywords = extract_keywords(text, words=5).split('\n')
+    # Extracting Keywords using RAKE
+    extracted_keywords = [keyword[0] for keyword in rake.run(text, maxWords=3, minFrequency=2)]
     
     # Named Entity Recognition using SpaCy
     doc = nlp(text)
