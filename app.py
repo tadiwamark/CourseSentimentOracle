@@ -53,12 +53,13 @@ def main():
             
             if st.button("Analyze Review"):
                 if openai.api_key:
-                    response = openai.Completion.create(
+                    response = openai.ChatCompletion.create(
                         engine="gpt-3.5-turbo",
                         prompt=f"This is a review: '{selected_review}'. The sentiment of this review is:",
                         temperature=0.5,
                         max_tokens=100
                     )
+
                     st.write(response.choices[0].text.strip())
                 else:
                     st.error("OpenAI API Key is missing. Please enter the API Key.")
