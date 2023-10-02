@@ -91,7 +91,7 @@ def main():
 
     # Sidebar Information
     st.sidebar.header('About App')
-    st.sidebar.write('This unified app allows users to enter course reviews and then analyzes the sentiment of the entered reviews in real-time using GPT-3.5 Turbo and additional advanced NLP techniques.')
+    st.sidebar.write('This app allows users to enter course reviews and then analyzes the sentiment of the entered reviews in real-time using GPT-3.5 Turbo and additional advanced NLP techniques.')
 
 if __name__ == "__main__":
     main()
