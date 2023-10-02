@@ -77,22 +77,23 @@ def main():
         # Setup UI Elements and Instructions
         setup_ui_elements()
         show_instructions()
-        
+            
         # User Input
         user_input = st.text_area("Enter the review:")
         if st.button('Analyze'):
             if user_input:
                 # Sentiment Analysis
-                if additional_features:
+                sentiment_result, additional_features = analyze_sentiment(user_input)
+                if additional_features:  # If no error occurred during sentiment analysis
                     st.success(f'Sentiment Analysis Result: {sentiment_result}')
                     additional_nlp_features(additional_features)
                     display_visualizations(sentiment_result, additional_features)
                     collect_feedback(user_input, sentiment_result, additional_features)
                 else:
-                    st.error(sentiment_result)
-                        
+                    st.error(sentiment_result)  # Display error from analyze_sentiment
             else:
                 st.warning('Please enter a review to analyze.')
+
 
     # Sidebar Information
     st.sidebar.header('About App')
