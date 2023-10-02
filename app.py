@@ -1,56 +1,96 @@
 import streamlit as st
 import openai
-import SessionState  # Ensure you've implemented the session state.
+import SessionState  
+from collections import deque
+#from authentication import authenticate_user
+from sentiment_analysis import analyze_sentiment, additional_nlp_features
+from visualization import display_visualizations
+from feedback import collect_feedback
+from user_interface import setup_ui_elements, show_instructions
 
-# Create a session state for storing reviews.
-session_state = SessionState.get(api_key="", reviews=[])
-
-# Check if the API key is stored in the session state.
-if not session_state.api_key:
-    # Prompt the user to enter their OpenAI API key.
-    session_state.api_key = st.sidebar.text_input("Enter your OpenAI API Key:")
-    if session_state.api_key:
-        # Set the API key for OpenAI.
-        openai.api_key = session_state.api_key
-else:
-    openai.api_key = session_state.api_key
-
-# Layout for page navigation.
-st.sidebar.header('Navigation')
-page = st.sidebar.radio('Choose a Page:', ['Enter Review', 'Analysis'])
-
-# Page Logic.
-if page == 'Enter Review':
-    st.title('Enter Your Review')
+def main():
+    st.title('Advanced NLP Course Sentiment Analysis App')
     
-    user_input = st.text_area("Paste the course review here:")
-
-    if st.button("Submit Review"):
-        # Store the review in session state.
-        session_state.reviews.append(user_input)
-        st.success("Review Submitted Successfully!")
-
-elif page == 'Analysis':
-    st.title('Real-time Review Analysis')
-
-    # List the stored reviews.
-    if session_state.reviews:
-        selected_review = st.selectbox('Select a review to analyze:', session_state.reviews)
-
-        if st.button("Analyze Review"):
-            response = openai.Completion.create(
-                engine="gpt-3.5-turbo",
-                prompt=f"This is a review: '{selected_review}'. The sentiment of this review is:",
-                temperature=0.5,
-                max_tokens=100
-            )
-            st.write(response.choices[0].text.strip())
+    # Authenticate User
+    #user = authenticate_user()
+    
+    # Initialize Session State
+    session_state = SessionState.get(api_key="", reviews=deque(maxlen=100))
+    
+    # Get API Key
+    if not session_state.api_key:
+        session_state.api_key = st.sidebar.text_input("Enter your OpenAI API Key:")
+        if session_state.api_key:
+            openai.api_key = session_state.api_key
     else:
-        st.warning('No reviews have been submitted yet!')
+        openai.api_key = session_state.api_key
 
-# Footer with instructions.
-st.sidebar.text("\n")
-st.sidebar.text("Instructions:")
-st.sidebar.text("1. Navigate to 'Enter Review' to submit a review.")
-st.sidebar.text("2. Switch to 'Analysis' to analyze the sentiment of entered reviews.")
-st.sidebar.text("3. Reviews entered are stored only for the current session.")
+    # Define Page Layout
+    st.sidebar.header('Navigation')
+    page = st.sidebar.radio('Go to', ['Enter Review', 'Analysis', 'Advanced Analysis'])
+
+    # Page logic.
+    if page == 'Enter Review':
+        st.title('Enter Your Review')
+        
+        # User Input
+        user_input = st.text_area("Paste the course review here:")
+        if st.button("Submit Review"):
+            if user_input:  # Prevent empty strings from being added
+                session_state.reviews.appendleft(user_input)
+                st.success("Review Submitted Successfully!")
+            else:
+                st.warning("Review field is empty!")
+    
+    elif page == 'Analysis':
+        st.title('Real-time Review Analysis')
+        
+        if session_state.reviews:
+            # Display Review Selector
+            selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(session_state.reviews))), format_func=lambda x: session_state.reviews[x])
+            selected_review = session_state.reviews[selected_review_index]
+            
+            if st.button("Analyze Review"):
+                if openai.api_key:
+                    response = openai.Completion.create(
+                        engine="gpt-3.5-turbo",
+                        prompt=f"This is a review: '{selected_review}'. The sentiment of this review is:",
+                        temperature=0.5,
+                        max_tokens=100
+                    )
+                    st.write(response.choices[0].text.strip())
+                else:
+                    st.error("OpenAI API Key is missing. Please enter the API Key.")
+        else:
+            st.warning('No reviews have been submitted yet!')
+        
+    elif page == 'Advanced Analysis':
+        # Setup UI Elements and Instructions
+        setup_ui_elements()
+        show_instructions()
+        
+        # User Input
+        user_input = st.text_area("Enter the review:")
+        if st.button('Analyze'):
+            if user_input:
+                # Sentiment Analysis
+                sentiment_result, additional_features = analyze_sentiment(user_input)
+                st.success(f'Sentiment Analysis Result: {sentiment_result}')
+                
+                # Display Additional NLP Features
+                additional_nlp_features(additional_features)
+                
+                # Display Visualizations
+                display_visualizations(sentiment_result, additional_features)
+                
+                # Collect User Feedback
+                collect_feedback(user_input, sentiment_result, additional_features)
+            else:
+                st.warning('Please enter a review to analyze.')
+
+    # Sidebar Information
+    st.sidebar.header('About App')
+    st.sidebar.write('This unified app allows users to enter course reviews and then analyzes the sentiment of the entered reviews in real-time using GPT-3.5 Turbo and additional advanced NLP techniques.')
+
+if __name__ == "__main__":
+    main()
