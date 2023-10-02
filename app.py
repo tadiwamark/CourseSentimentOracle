@@ -22,10 +22,10 @@ def main():
         st.session_state.reviews = deque(maxlen=100)
     
     # Get API Key
-    if not session_state.api_key:
-        session_state.api_key = st.sidebar.text_input("Enter your OpenAI API Key:")
-        if session_state.api_key:
-            openai.api_key = session_state.api_key
+    if not st.session_state.api_key:
+        st.session_state.api_key = st.sidebar.text_input("Enter your OpenAI API Key:")
+        if st.session_state.api_key:
+            openai.api_key = st.session_state.api_key
     else:
         openai.api_key = session_state.api_key
 
@@ -41,7 +41,7 @@ def main():
         user_input = st.text_area("Paste the course review here:")
         if st.button("Submit Review"):
             if user_input:  # Prevent empty strings from being added
-                session_state.reviews.appendleft(user_input)
+                st.session_state.reviews.appendleft(user_input)
                 st.success("Review Submitted Successfully!")
             else:
                 st.warning("Review field is empty!")
@@ -49,9 +49,9 @@ def main():
     elif page == 'Analysis':
         st.title('Real-time Review Analysis')
         
-        if session_state.reviews:
-            selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(session_state.reviews))), format_func=lambda x: session_state.reviews[x])
-            selected_review = session_state.reviews[selected_review_index]
+        if st.session_state.reviews:
+            selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(st.session_state.reviews))), format_func=lambda x: st.session_state.reviews[x])
+            selected_review = st.session_state.reviews[selected_review_index]
             
             if st.button("Analyze Review"):
                 if openai.api_key:
