@@ -2,6 +2,10 @@
 
 This repository hosts a sophisticated sentiment analysis application developed in Python using OpenAI's GPT-3.5 Turbo model. It performs real-time sentiment analysis on course reviews, providing immediate feedback and additional insights such as keyword extraction and entity recognition.
 
+## Project contributors
+### Tadiwanashe Nyaruwata R204445V
+### Tungamirashe Mukwena R20
+
 ## Table of Contents
 
 - [Introduction](#introduction)
