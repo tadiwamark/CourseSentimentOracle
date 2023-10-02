@@ -64,7 +64,7 @@ def main():
                             temperature=0.5,
                             max_tokens=100
                         )
-                        st.write("OpenAI's Response:", response['choices'][0]['message']['content'])
+                        st.write("GPT 3.5-Turbo's Response:", response['choices'][0]['message']['content'])
                     except openai.error.OpenAIError as e:
                         st.error(f"Error: {e}")
                 else:
