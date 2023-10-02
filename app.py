@@ -83,17 +83,14 @@ def main():
         if st.button('Analyze'):
             if user_input:
                 # Sentiment Analysis
-                sentiment_result, additional_features = analyze_sentiment(user_input)
-                st.success(f'Sentiment Analysis Result: {sentiment_result}')
-                
-                # Display Additional NLP Features
-                additional_nlp_features(additional_features)
-                
-                # Display Visualizations
-                display_visualizations(sentiment_result, additional_features)
-                
-                # Collect User Feedback
-                collect_feedback(user_input, sentiment_result, additional_features)
+                if additional_features:
+                    st.success(f'Sentiment Analysis Result: {sentiment_result}')
+                    additional_nlp_features(additional_features)
+                    display_visualizations(sentiment_result, additional_features)
+                    collect_feedback(user_input, sentiment_result, additional_features)
+                else:
+                    st.error(sentiment_result)
+                        
             else:
                 st.warning('Please enter a review to analyze.')
 
