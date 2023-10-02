@@ -6,7 +6,7 @@ from collections import deque
 from sentiment_analysis import analyze_sentiment, additional_nlp_features
 from visualization import display_visualizations
 from feedback import collect_feedback
-from user_interface import setup_ui_elements, show_instructions
+from user_interface import show_instructions
 import nltk
 
 def main():
