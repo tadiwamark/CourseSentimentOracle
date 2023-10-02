@@ -1,6 +1,6 @@
 import streamlit as st
 import openai
-from preprocessing import preprocess_text  # Make sure to import your actual preprocessing function
+from preprocessing import preprocess_text  # Importing our custom mdae preprocessing function
 import SessionState
 
 # Initialize SessionState
