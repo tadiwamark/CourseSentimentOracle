@@ -77,8 +77,7 @@ def main():
 
         
     elif page == 'Advanced Analysis':
-        # Setup UI Elements and Instructions
-        setup_ui_elements()
+        # Setup Instructions
         show_instructions()
             
         # User Input
