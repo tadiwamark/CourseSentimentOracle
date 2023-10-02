@@ -16,7 +16,10 @@ def main():
     #user = authenticate_user()
     
     # Initialize Session State
-    session_state = SessionState.get(api_key="", reviews=deque(maxlen=100))
+    if 'api_key' not in st.session_state:
+        st.session_state.api_key = ""
+    if 'reviews' not in st.session_state:
+        st.session_state.reviews = deque(maxlen=100)
     
     # Get API Key
     if not session_state.api_key:
