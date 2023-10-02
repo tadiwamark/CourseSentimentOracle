@@ -1,5 +1,6 @@
 import openai
 from text_preprocessor import preprocess_text
+import nltk
 
 
 def analyze_sentiment(review_text):
