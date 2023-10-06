@@ -2,6 +2,7 @@ import openai
 import streamlit as st
 import tensorflow as tf
 from text_preprocessor import preprocess_text
+from tensorflow.keras.preprocessing.text import Tokenizer
 import spacy
 from collections import Counter
 import urllib.request
