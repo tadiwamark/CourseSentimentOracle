@@ -1,6 +1,6 @@
 # Tools & Technologies
 
-This document provides detailed insights into the tools, libraries, and technologies used to develop the Course Sentiment Oracle application. The application employs a blend of advanced NLP models, web frameworks, and Python libraries to deliver an efficient and user-friendly experience.
+This document provides detailed insights into the tools, libraries, and technologies used to develop the Course Sentiment Oracle application. The application employs a blend of advanced NLP models, web frameworks, machine learning, and Python libraries to deliver an efficient and user-friendly experience.
 
 ## 1. OpenAI GPT-3.5 Turbo
 
@@ -20,7 +20,16 @@ Streamlit is a Python library used to create web apps with minimum effort. It’
 - Interactive widgets
 - Customizable layout
 
-## 3. NLTK & SpaCy
+## 3. TensorFlow
+
+TensorFlow is an open-source machine learning library that's used to train custom sentiment analysis models for the project.
+
+### Features:
+- Highly modular and versatile for research
+- Supports deep learning and neural networks
+- Efficient execution across CPU and GPU
+
+## 4. NLTK & SpaCy
 
 NLTK (Natural Language Toolkit) and SpaCy are Python libraries used for natural language processing tasks in this project, such as tokenization and keyword extraction.
 
@@ -29,7 +38,7 @@ NLTK (Natural Language Toolkit) and SpaCy are Python libraries used for natural 
 - Efficient text processing
 - Community and developer support
 
-## 4. Python
+## 5. Python
 
 Python is the primary programming language used for developing this application due to its versatility, readability, and extensive library support.
 
@@ -38,7 +47,7 @@ Python is the primary programming language used for developing this application 
 - Readable and maintainable code
 - Community and developer support
 
-## 5. Additional Libraries
+## 6. Additional Libraries
 
 ### a. **NumPy and Pandas**
 Used for numerical computing and data manipulation respectively, providing efficient and intuitive data structures for manipulating numerical data.
@@ -46,7 +55,7 @@ Used for numerical computing and data manipulation respectively, providing effic
 ### b. **Matplotlib**
 Employed for creating static, interactive, and animated visualizations in Python.
 
-## 6. GitHub
+## 7. GitHub
 
 GitHub is used as the version control system to host the codebase for the Course Sentiment Oracle, enabling collaboration and source code management.
 
@@ -55,7 +64,7 @@ GitHub is used as the version control system to host the codebase for the Course
 - Collaboration features
 - Community support
 
-## 7. Virtual Environment (venv)
+## 8. Virtual Environment (venv)
 
 Python’s venv is used to create isolated Python environments, each with its own installation directories, for the project, allowing for separation of dependencies.
 
@@ -64,6 +73,15 @@ Python’s venv is used to create isolated Python environments, each with its ow
 - Dependency separation
 - Easier package management
 
+## 9. urllib
+
+Python's `urllib` is used to fetch models and other resources directly from URLs, facilitating real-time and dynamic model updates.
+
+### Features:
+- URL handling modules
+- Fetching online data seamlessly
+- Supports complex URL patterns
+
 # Conclusion
 
-The blend of these tools and technologies empowers the Course Sentiment Oracle to efficiently analyze sentiments in course reviews and extract additional insights. The synergy between advanced NLP models, Python libraries, and web frameworks enables the delivery of a powerful and user-friendly sentiment analysis application.
+The blend of these tools and technologies empowers the Course Sentiment Oracle to efficiently analyze sentiments in course reviews and extract additional insights. The synergy between advanced NLP models, machine learning, Python libraries, and web frameworks enables the delivery of a powerful and user-friendly sentiment analysis application.
