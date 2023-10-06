@@ -3,6 +3,7 @@ import streamlit as st
 import tensorflow as tf
 from text_preprocessor import preprocess_text
 from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 import spacy
 from collections import Counter
 import urllib.request
