@@ -9,8 +9,15 @@ from collections import Counter
 nlp = spacy.load('en_core_web_sm')
 
 # Load custom model
-CUSTOM_MODEL_PATH = "/content/drive/My Drive/Colab Notebooks/final_model.h5"
-custom_model = tf.keras.models.load_model(CUSTOM_MODEL_PATH)
+def load_model_from_github(url):
+    filename = url.split('/')[-1]
+    urllib.request.urlretrieve(url, filename)
+    loaded_model = tf.keras.models.load_model(filename)
+    return loaded_model
+
+# Download and Load Model
+model_url = 'https://github.com/tadiwamark/CourseSentimentOracle/releases/download/sentiment-analysis/final_model.h5'
+custom_model = load_model_from_github(model_url)
 
 def analyze_sentiment(review_text):
     """Sentiment Analysis using GPT-3.5 Turbo."""
