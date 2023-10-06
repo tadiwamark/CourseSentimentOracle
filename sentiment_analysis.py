@@ -1,18 +1,20 @@
 import openai
-from text_preprocessor import preprocess_text
-import nltk
 import streamlit as st
-
-
+import tensorflow as tf
+from text_preprocessor import preprocess_text
 import spacy
 from collections import Counter
 
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
 
+# Load custom model
+CUSTOM_MODEL_PATH = "/content/drive/My Drive/Colab Notebooks/final_model.h5"
+custom_model = tf.keras.models.load_model(CUSTOM_MODEL_PATH)
+
 def analyze_sentiment(review_text):
-    """Sentiment Analysis."""
-    preprocessed_text = preprocess_text(review_text)  # preprocess text before analysis
+    """Sentiment Analysis using GPT-3.5 Turbo."""
+    preprocessed_text = preprocess_text(review_text)
     
     # Performing NLP using spaCy
     doc = nlp(preprocessed_text)
@@ -48,18 +50,28 @@ def analyze_sentiment(review_text):
     except Exception as e:
         return str(e), None  # Returning error string and None for additional_features if there is an exception
 
+def analyze_sentiment_simple(review_text):
+    """Sentiment Analysis using the custom model."""
+    preprocessed_text = preprocess_text(review_text)
+    
+    # Tokenization and padding
+    tokenizer = Tokenizer(oov_token=OOV_TOKEN)
+    sequence = tokenizer.texts_to_sequences([preprocessed_text])
+    padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
+    
+    # Making prediction
+    prediction = custom_model.predict(padded_sequence)[0]
+    
+    if prediction >= 0.5:
+        return "Positive", None
+    else:
+        return "Negative", None
+
 def additional_nlp_features(features):
     """Display additional NLP features."""
-    st.subheader("Extracted Keywords:")
-    st.write(", ".join(features.get("keywords", [])))
+    if features:
+        st.subheader("Extracted Keywords:")
+        st.write(", ".join(features.get("keywords", [])))
 
-    st.subheader("Recognized Entities:")
-    st.write(", ".join(features.get("entities", [])))
-
-
-def analyze_sentiment_simple(review_text):
-    sequence = tokenizer.texts_to_sequences([review_text])
-    padded_sequence = pad_sequences(sequence, maxlen=padded_sequences.shape[1], padding='post')
-    prediction = model.predict(padded_sequence)
-    return "Positive" if prediction >= 0.5 else "Negative"
-
+        st.subheader("Recognized Entities:")
+        st.write(", ".join(features.get("entities", [])))
