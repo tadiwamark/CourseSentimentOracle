@@ -6,7 +6,7 @@ This repository hosts a sophisticated sentiment analysis application developed i
 ### Tadiwanashe Nyaruwata R204445V
 ### Tungamirashe Mukwena R20
 
-Access the app at [https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/)
+#### Access the app at [https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/)
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Access the app at [https://coursesentimentoracle.streamlit.app/](https://courses
 - [Installation](#installation)
 - [Usage](#usage)
 - [Model Architecture](#model-architecture)
-- [Why GPT Outperforms](#why-gpt-outperforms)
+- [Why GPT Outperforms Our Model](#why-gpt-outperforms)
 - [Project Structure](#project-structure)
 
 ## Introduction
