@@ -55,3 +55,11 @@ def additional_nlp_features(features):
 
     st.subheader("Recognized Entities:")
     st.write(", ".join(features.get("entities", [])))
+
+
+def analyze_sentiment_simple(review_text):
+    sequence = tokenizer.texts_to_sequences([review_text])
+    padded_sequence = pad_sequences(sequence, maxlen=padded_sequences.shape[1], padding='post')
+    prediction = model.predict(padded_sequence)
+    return "Positive" if prediction >= 0.5 else "Negative"
+
