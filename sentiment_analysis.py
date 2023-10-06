@@ -74,11 +74,9 @@ def analyze_sentiment(review_text):
 def analyze_sentiment_simple(review_text):
     # Preprocess the review text
     preprocessed_text = preprocess_text(review_text)
-    print(f"Preprocessed Text: {preprocessed_text}")  # Debugging print
     
     # Tokenize the preprocessed text
     sequence = tokenizer.texts_to_sequences([preprocessed_text])
-    print(f"Tokenized Sequence: {sequence}")  # Debugging print
     
     # Check if tokenizer returned an empty list
     if not sequence or not sequence[0]:
@@ -86,7 +84,6 @@ def analyze_sentiment_simple(review_text):
 
     # Pad the sequence
     padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
-    print(f"Padded Sequence: {padded_sequence}")  # Debugging print
     
     # Predict the sentiment
     prediction = custom_model.predict(padded_sequence)
