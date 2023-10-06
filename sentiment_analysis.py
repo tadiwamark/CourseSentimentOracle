@@ -69,27 +69,32 @@ def analyze_sentiment(review_text):
     except Exception as e:
         return str(e), None  # Returning error string and None for additional_features if there is an exception
 
-def analyze_sentiment_simple(review_text):
+def analyze_sentiment_simple(review_text, model):
     # Preprocess the review text
     preprocessed_text = preprocess_text(review_text)
+    
+    # If preprocess_text returned None or empty string
+    if not preprocessed_text:
+        return "Unable to process the review. It might be empty or not contain valid words."
 
     # Tokenize the preprocessed text
     sequence = tokenizer.texts_to_sequences([preprocessed_text])
     
     # Check if tokenizer returned an empty list
     if not sequence or not sequence[0]:
-        return "Unable to process the review. Please try again."
+        return "Review contains words not seen during training. Unable to process."
 
     # Pad the sequence
     padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
     
     # Predict the sentiment
-    prediction = custom_model.predict(padded_sequence)
+    prediction = model.predict(padded_sequence)
 
     # Convert prediction to sentiment label
     sentiment = "Positive" if prediction >= 0.5 else "Negative"
 
     return sentiment
+
 
 
 def additional_nlp_features(features):
