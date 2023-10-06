@@ -21,6 +21,12 @@ def load_model_from_github(url):
 model_url = 'https://github.com/tadiwamark/CourseSentimentOracle/releases/download/sentiment-analysis/final_model.h5'
 custom_model = load_model_from_github(model_url)
 
+# Constants
+MAX_LEN = 100
+TRUNC_TYPE = 'post'
+PADDING_TYPE = 'post'
+OOV_TOKEN = "<OOV>"
+
 def analyze_sentiment(review_text):
     """Sentiment Analysis using GPT-3.5 Turbo."""
     preprocessed_text = preprocess_text(review_text)
