@@ -4,6 +4,7 @@ import tensorflow as tf
 from text_preprocessor import preprocess_text
 import spacy
 from collections import Counter
+import urllib.request
 
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
