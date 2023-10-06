@@ -68,7 +68,7 @@ def main():
                     else:
                         st.error("OpenAI API Key is missing. Please enter the API Key.")
                 elif model_choice == 'Simple Model':
-                    sentiment = analyze_sentiment_simple(selected_review, model)
+                    sentiment = analyze_sentiment_simple(selected_review)
                     st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
 
         else:
