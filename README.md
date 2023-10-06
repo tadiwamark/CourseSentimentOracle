@@ -4,7 +4,7 @@ This repository hosts a sophisticated sentiment analysis application developed i
 
 ## Project contributors
 ### Tadiwanashe Nyaruwata R204445V
-### Tungamirashe Mukwena R20
+### Tungamirashe Mukwena R204452G
 
 #### Access the app at [https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/)
 #### Link to YouTube video that demonstrates how our app works 
