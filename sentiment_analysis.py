@@ -11,6 +11,10 @@ import urllib.request
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
 
+# Load pre-fitted tokenizer
+with open('tokenizer.pickle', 'rb') as handle:
+    tokenizer = pickle.load(handle)
+
 # Load custom model
 def load_model_from_github(url):
     filename = url.split('/')[-1]
@@ -27,9 +31,6 @@ MAX_LEN = 100
 TRUNC_TYPE = 'post'
 PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
-
-# Tokenization
-tokenizer = Tokenizer(oov_token=OOV_TOKEN)
 
 def analyze_sentiment(review_text):
     """Sentiment Analysis using GPT-3.5 Turbo."""
