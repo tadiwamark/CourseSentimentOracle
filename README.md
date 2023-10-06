@@ -66,7 +66,7 @@ The application consists of two main components:
 1. **Sentiment Analysis Model:** Uses OpenAI's GPT-3.5 Turbo and a custom-trained TensorFlow model to analyze the sentiment of the preprocessed review text.
 2. **Additional NLP Tasks:** Employs advanced NLP techniques to perform tasks like keyword extraction and entity recognition, providing added insights.
 
-## Why GPT Outperforms
+## Why GPT Outperforms Our Model
 
 OpenAI's GPT-3.5 Turbo model, as one of the most advanced language models, can generate human-like text based on the input it receives. Its vast pre-training data allows it to understand diverse contexts and linguistic nuances. In contrast, our custom model, though specialized, has been trained on a limited dataset. This makes GPT-3.5 Turbo better equipped to handle varied inputs and deliver more accurate sentiment analysis results.
 
