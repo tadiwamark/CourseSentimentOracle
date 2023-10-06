@@ -66,7 +66,7 @@ def analyze_sentiment(review_text):
     except Exception as e:
         return str(e), None  # Returning error string and None for additional_features if there is an exception
 
-def analyze_sentiment_simple(review_text, model):
+def analyze_sentiment_simple(review_text):
     # Preprocess the review text
     preprocessed_text = preprocess_text(review_text)
 
@@ -81,7 +81,7 @@ def analyze_sentiment_simple(review_text, model):
     padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
     
     # Predict the sentiment
-    prediction = model.predict(padded_sequence)
+    prediction = custom_model.predict(padded_sequence)
 
     # Convert prediction to sentiment label
     sentiment = "Positive" if prediction >= 0.5 else "Negative"
