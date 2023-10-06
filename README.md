@@ -7,6 +7,7 @@ This repository hosts a sophisticated sentiment analysis application developed i
 ### Tungamirashe Mukwena R20
 
 #### Access the app at [https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/)
+#### Link to YouTube video that demonstrates how our app works 
 
 ## Table of Contents
 
