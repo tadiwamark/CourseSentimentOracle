@@ -28,6 +28,9 @@ TRUNC_TYPE = 'post'
 PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
 
+# Tokenization
+tokenizer = Tokenizer(oov_token=OOV_TOKEN)
+
 def analyze_sentiment(review_text):
     """Sentiment Analysis using GPT-3.5 Turbo."""
     preprocessed_text = preprocess_text(review_text)
