@@ -10,16 +10,7 @@ from feedback import collect_feedback
 from user_interface import show_instructions
 import nltk
 
-# Function to download and load the model
-def load_model_from_github(url):
-    filename = url.split('/')[-1]
-    urllib.request.urlretrieve(url, filename)
-    loaded_model = tf.keras.models.load_model(filename)
-    return loaded_model
 
-# Download and Load Model
-model_url = 'https://github.com/tadiwamark/CourseSentimentOracle/releases/download/sentiment-analysis/final_model.h5'
-model = load_model_from_github(model_url)
 
 def main():
     st.title('Advanced NLP Course Sentiment Analysis App')
