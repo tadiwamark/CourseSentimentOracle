@@ -64,10 +64,10 @@ def main():
                 if st.button("Analyze Review"):
                     if model_choice == 'GPT-3.5 Turbo':
                         if openai.api_key:
-                        conversation = [
-                            {"role": "system", "content": "You are a helpful assistant."},
-                            {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
-                        ]
+                            conversation = [
+                                {"role": "system", "content": "You are a helpful assistant."},
+                                {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
+                            ]
                         try:
                             response = openai.ChatCompletion.create(
                                 model="gpt-3.5-turbo",
