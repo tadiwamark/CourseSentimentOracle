@@ -18,7 +18,16 @@ with open('tokenizer.pickle', 'rb') as handle:
     
 def load_uploaded_model(model_file, tokenizer_file):
     """Loads a model and tokenizer uploaded by the user."""
-    model = tf.keras.models.load_model(model_file)
+    # Save uploaded model to a temporary file
+    temp_model_file = tempfile.NamedTemporaryFile(delete=False, suffix=".h5")
+    with open(temp_model_file.name, 'wb') as f:
+        f.write(uploaded_model.getbuffer())
+    
+    # Load the model
+    model = tf.keras.models.load_model(temp_model_file.name)
+
+    # Clean up temporary file
+    os.remove(temp_model_file.name)
 
     # Load the tokenizer
     tokenizer = pickle.loads(uploaded_tokenizer.getvalue())
