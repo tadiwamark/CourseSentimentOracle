@@ -4,12 +4,11 @@ import urllib.request
 import tensorflow as tf
 import SessionState  
 from collections import deque
-from sentiment_analysis import analyze_sentiment, additional_nlp_features, preprocess_text, analyze_sentiment_simple
+from sentiment_analysis import analyze_sentiment, additional_nlp_features, preprocess_text, analyze_sentiment_simple, load_uploaded_model
 from visualization import display_visualizations
 from feedback import collect_feedback
 from user_interface import show_instructions
 import nltk
-
 
 
 def main():
@@ -20,6 +19,16 @@ def main():
         st.session_state.api_key = st.sidebar.text_input("Enter your OpenAI API Key:")
         if st.session_state.api_key:
             openai.api_key = st.session_state.api_key
+
+
+    # Upload model and tokenizer
+    uploaded_model = st.sidebar.file_uploader("Upload your custom model (.h5)", type=["h5"])
+    uploaded_tokenizer = st.sidebar.file_uploader("Upload the tokenizer (.pickle)", type=["pickle"])
+
+    # If both model and tokenizer are uploaded, load them.
+    if uploaded_model and uploaded_tokenizer:
+        custom_model, tokenizer = load_uploaded_model(uploaded_model, uploaded_tokenizer)
+
 
     # Define Page Layout
     st.sidebar.header('Navigation')
@@ -39,10 +48,14 @@ def main():
             else:
                 st.warning("Review field is empty!")
 
-    elif page == 'Analysis':
+   elif page == 'Analysis':
         st.title('Real-time Review Analysis')
 
-        model_choice = st.selectbox('Choose a model', ['GPT-3.5 Turbo', 'Simple Model'])
+        model_choices = ['GPT-3.5 Turbo', 'Simple Model']
+        if uploaded_model and uploaded_tokenizer:
+            model_choices.append('Uploaded Custom Model')
+        
+        model_choice = st.selectbox('Choose a model', model_choices)
 
         if st.session_state.get('reviews'):
             selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(st.session_state.reviews))), format_func=lambda x: st.session_state.reviews[x])
@@ -50,26 +63,13 @@ def main():
 
             if st.button("Analyze Review"):
                 if model_choice == 'GPT-3.5 Turbo':
-                    if openai.api_key:
-                        conversation = [
-                            {"role": "system", "content": "You are a helpful assistant."},
-                            {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
-                        ]
-                        try:
-                            response = openai.ChatCompletion.create(
-                                model="gpt-3.5-turbo",
-                                messages=conversation,
-                                temperature=0.5,
-                                max_tokens=100
-                            )
-                            st.write("GPT 3.5-Turbo's Response:", response['choices'][0]['message']['content'])
-                        except openai.error.OpenAIError as e:
-                            st.error(f"Error: {e}")
-                    else:
-                        st.error("OpenAI API Key is missing. Please enter the API Key.")
+                    # ... GPT analysis code ...
                 elif model_choice == 'Simple Model':
                     sentiment = analyze_sentiment_simple(selected_review)
-                    st.write(f"The sentiment of this review is (using Simple Model): {sentiment}")
+                    st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
+                elif model_choice == 'Uploaded Custom Model':
+                    sentiment = analyze_sentiment_simple(selected_review, custom_model, tokenizer)
+                    st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
 
         else:
             st.warning('No reviews have been submitted yet!')
