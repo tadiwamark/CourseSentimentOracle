@@ -102,6 +102,7 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
     """
 
     if model == 'gpt-3.5-turbo':
+        preprocessed_text = preprocess_text(review_text)
         if openai.api_key:
             conversation = [
                 {"role": "system", "content": "You are a helpful assistant. Provide sentiment, keywords, and entities separately."},
