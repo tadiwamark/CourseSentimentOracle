@@ -18,9 +18,11 @@ with open('tokenizer.pickle', 'rb') as handle:
     
 def load_uploaded_model(model_file, tokenizer_file):
     """Loads a model and tokenizer uploaded by the user."""
-    with open(tokenizer_file, 'rb') as handle:
-        tokenizer = pickle.load(handle)
     model = tf.keras.models.load_model(model_file)
+
+    # Load the tokenizer
+    tokenizer = pickle.loads(uploaded_tokenizer.getvalue())
+    
     return model, tokenizer
     
 # Load custom model
