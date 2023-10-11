@@ -75,6 +75,10 @@ def analyze_sentiment_simple(review_text,tokenizer=None,model=None):
             tokenizer = pickle.load(handle)
     sequence = tokenizer.texts_to_sequences([preprocessed_text])
 
+    # Use the default custom_model if no model is passed
+    if model is None:
+        model = custom_model
+
     # Check if tokenizer returned an empty list
     if not sequence or not sequence[0]:
         return "Review contains words not seen during training. Unable to process."
