@@ -6,7 +6,7 @@ This repository hosts a sophisticated sentiment analysis application developed i
 ### Tadiwanashe Nyaruwata R204445V
 ### Tungamirashe Mukwena R204452G
 
-#### Access the app at [[[https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle-ecq5x62djgqsojx75jyx7z.streamlit.app/))](https://coursesentimentoracle-ecq5x62djgqsojx75jyx7z.streamlit.app/)
+#### Access the app at [(https://coursesentimentoracle-ecq5x62djgqsojx75jyx7z.streamlit.app/))](https://coursesentimentoracle-ecq5x62djgqsojx75jyx7z.streamlit.app/)
 #### Link to YouTube video that demonstrates how our app works https://youtu.be/53bxT1WEuFs
 
 ## Table of Contents
