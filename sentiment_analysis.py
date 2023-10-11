@@ -136,7 +136,7 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
     return sentiment_result, keywords, entities
 
 
-def additional_nlp_features(features):
+def additional_nlp_features(keywords,entities):
     """Display additional NLP features."""
     if features:
         st.subheader("Extracted Keywords:")
