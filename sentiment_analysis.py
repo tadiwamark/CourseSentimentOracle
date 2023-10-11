@@ -62,28 +62,6 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Extracting keywords using noun chunks
     keywords = [chunk.text for chunk in doc.noun_chunks]
 
-    # Analyzing sentiment using OpenAI
-    conversation = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": f"The sentiment of this review is: {preprocessed_text}"}
-    ]
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=conversation,
-            temperature=0.5,
-            max_tokens=150
-        )
-        sentiment_result = response['choices'][0]['message']['content']
-    
-        # Additional NLP Tasks and Features extraction
-        additional_features = {
-            "keywords": keywords,
-            "entities": entities
-        }   
-
-    except Exception as e:
-        return str(e), None  # Returning error string and None for additional_features if there is an exception
 
 
     return sentiment_result, additional_features
