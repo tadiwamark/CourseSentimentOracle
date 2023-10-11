@@ -48,7 +48,7 @@ def main():
             else:
                 st.warning("Review field is empty!")
 
-       elif page == 'Analysis':
+    elif page == 'Analysis':
             st.title('Real-time Review Analysis')
     
             model_choices = ['GPT-3.5 Turbo', 'Simple Model']
@@ -63,7 +63,23 @@ def main():
     
                 if st.button("Analyze Review"):
                     if model_choice == 'GPT-3.5 Turbo':
-                        # ... GPT analysis code ...
+                        if openai.api_key:
+                        conversation = [
+                            {"role": "system", "content": "You are a helpful assistant."},
+                            {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
+                        ]
+                        try:
+                            response = openai.ChatCompletion.create(
+                                model="gpt-3.5-turbo",
+                                messages=conversation,
+                                temperature=0.5,
+                                max_tokens=100
+                            )
+                            st.write("GPT 3.5-Turbo's Response:", response['choices'][0]['message']['content'])
+                        except openai.error.OpenAIError as e:
+                            st.error(f"Error: {e}")
+                    else:
+                        st.error("OpenAI API Key is missing. Please enter the API Key.")
                     elif model_choice == 'Simple Model':
                         sentiment = analyze_sentiment_simple(selected_review)
                         st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
@@ -72,7 +88,7 @@ def main():
                         st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
     
             else:
-                st.warning('No reviews have been submitted yet!')
+                st.warning('No reviews have been submitted yet!')   
 
     elif page == 'Advanced Analysis':
         # Setup Instructions
