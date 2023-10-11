@@ -9,6 +9,7 @@ import spacy
 from collections import Counter
 import urllib.request
 import tempfile
+import os
 
 
 # Load spaCy model
