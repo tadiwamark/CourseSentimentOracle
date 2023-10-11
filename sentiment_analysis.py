@@ -72,7 +72,7 @@ def analyze_sentiment_simple(review_text,tokenizer=None):
     prediction = custom_model.predict(padded_sequence)
 
      # Convert prediction to sentiment label
-    sentiment = "Positive" if prediction[0][0] >= 0.5 else "Negative"
+    sentiment_result = "Positive" if prediction[0][0] >= 0.5 else "Negative"
     
     return sentiment_result, keywords, entities
 
