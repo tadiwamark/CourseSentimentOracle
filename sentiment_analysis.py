@@ -72,7 +72,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
             model="gpt-3.5-turbo",
             messages=conversation,
             temperature=0.5,
-            max_tokens=100
+            max_tokens=150
         )
         sentiment_result = response['choices'][0]['message']['content']
     
@@ -80,12 +80,13 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
         additional_features = {
             "keywords": keywords,
             "entities": entities
-        }
-        
-        return sentiment_result, additional_features
+        }   
 
     except Exception as e:
         return str(e), None  # Returning error string and None for additional_features if there is an exception
+
+
+    return sentiment_result, additional_features
 
 
 def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
@@ -112,7 +113,7 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
             model="gpt-3.5-turbo",
             messages=conversation,
             temperature=0.5,
-            max_tokens=300
+            max_tokens=150
             )
         
             response_content = response['choices'][0]['message']['content'].split('\n')
@@ -123,8 +124,8 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
             entities = response_content[2].replace("Entities:", "").split(',')
         
             additional_features = {
-                "keywords": [keyword.strip() for keyword in keywords],
-                "entities": [entity.strip() for entity in entities]
+                "Extracted Keywords:": [keyword.strip() for keyword in keywords],
+                "Recognized Entities:": [entity.strip() for entity in entities]
             }
         
 
@@ -136,13 +137,3 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
         raise ValueError(f"Model {model} not supported.")
 
     return sentiment_result, additional_features
-
-
-def additional_nlp_features(features):
-    """Display additional NLP features."""
-    if features:
-        st.subheader("Extracted Keywords:")
-        st.write(", ".join(features.get("keywords", [])))
-
-        st.subheader("Recognized Entities:")
-        st.write(", ".join(features.get("entities", [])))
