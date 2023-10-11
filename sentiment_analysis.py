@@ -79,7 +79,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
          # Extracting keywords and entities using GPT 3.5 Turbo
         conversation_keywords = [
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"What are the keywords and entities in this review: '{preprocessed_text}'?"}
+            {"role": "user", "content": f"The keywords and entities in this review are: '{preprocessed_text}'?"}
         ]
 
         response_keywords = openai.ChatCompletion.create(
