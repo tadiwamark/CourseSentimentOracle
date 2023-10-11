@@ -69,7 +69,11 @@ def analyze_sentiment_simple(review_text,tokenizer=None):
     padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
 
     # Predict the sentiment
-    sentiment_result = custom_model.predict(padded_sequence)
+    prediction = custom_model.predict(padded_sequence)
+
+     # Convert prediction to sentiment label
+    sentiment = "Positive" if prediction[0][0] >= 0.5 else "Negative"
+    
     return sentiment_result, keywords, entities
 
 
