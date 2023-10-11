@@ -114,7 +114,7 @@ def main():
                     display_visualizations(sentiment_result, additional_features)
                     collect_feedback(user_input, sentiment_result, additional_features)
                 else:
-                    st.error(sentiment_result)  # Display error from analyze_sentiment
+                    st.error(sentiment_result)  # Display error 
             else:
                 st.warning('Please enter a review to analyze.')
 
