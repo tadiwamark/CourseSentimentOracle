@@ -50,7 +50,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Use the default custom_model if no model is passed
     if model is None:
         model = custom_model
-    """Sentiment Analysis."""
+    """Sentiment Analysis using GPT-3.5 Turbo."""
     preprocessed_text = preprocess_text(review_text)
     
     # Performing NLP using spaCy
@@ -62,7 +62,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Extracting keywords using noun chunks
     keywords = [chunk.text for chunk in doc.noun_chunks]
 
-    # Analyzing sentiment using GPT 3.5 Turbo
+    # Analyzing sentiment using OpenAI
     conversation = [
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": f"The sentiment of this review is: {preprocessed_text}"}
@@ -75,32 +75,13 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
             max_tokens=100
         )
         sentiment_result = response['choices'][0]['message']['content']
-
-         # Extracting keywords and entities using GPT 3.5 Turbo
-        conversation = [
-        {"role": "system", "content": "You are a helpful assistant. Provide sentiment, keywords, and entities separately."},
-        {"role": "user", "content": f"For the review: '{preprocessed_text}', what is its sentiment? Also, list its keywords and entities."}
-    ]
-
-        response_keywords = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=conversation_keywords,
-            temperature=0.5,
-            max_tokens=150
-        )
-
-        response_content = response['choices'][0]['message']['content'].split('\n')
-
-        # Assuming the model returns in the format "Sentiment: ...", "Keywords: ...", "Entities: ..."
-        sentiment_result = response_content[0].replace("Sentiment:", "").strip()
-        keywords = response_content[1].replace("Keywords:", "").split(',')
-        entities = response_content[2].replace("Entities:", "").split(',')
     
+        # Additional NLP Tasks and Features extraction
         additional_features = {
-            "keywords": [keyword.strip() for keyword in keywords],
-            "entities": [entity.strip() for entity in entities]
+            "keywords": keywords,
+            "entities": entities
         }
-    
+        
         return sentiment_result, additional_features
 
     except Exception as e:
@@ -123,26 +104,28 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
     if model == 'gpt-3.5-turbo':
         if openai.api_key:
             conversation = [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": f"The sentiment of this review is: {review_text}"}
+                {"role": "system", "content": "You are a helpful assistant. Provide sentiment, keywords, and entities separately."},
+                {"role": "user", "content": f"For the review: '{preprocessed_text}', what is its sentiment? Also, list its keywords and entities."}
             ]
-            try:
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=conversation,
-                    temperature=0.5,
-                    max_tokens=100
-                )
-                sentiment_result = response['choices'][0]['message']['content']
-                
-                
-                additional_features = {
-                    "keywords": [], 
-                    "entities": []
-                }
-    
-            except openai.error.OpenAIError as e:
-                return str(e), None
+            response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=conversation,
+            temperature=0.5,
+            max_tokens=300
+            )
+        
+            response_content = response['choices'][0]['message']['content'].split('\n')
+        
+
+            sentiment_result = response_content[0].replace("Sentiment:", "").strip()
+            keywords = response_content[1].replace("Keywords:", "").split(',')
+            entities = response_content[2].replace("Entities:", "").split(',')
+        
+            additional_features = {
+                "keywords": [keyword.strip() for keyword in keywords],
+                "entities": [entity.strip() for entity in entities]
+            }
+        
 
     elif model == 'simple':
         # For the simple model, you'd process the review differently.
