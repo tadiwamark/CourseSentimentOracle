@@ -50,7 +50,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Use the default custom_model if no model is passed
     if model is None:
         model = custom_model
-    """Sentiment Analysis using GPT-3.5 Turbo."""
+    """Sentiment Analysis."""
     preprocessed_text = preprocess_text(review_text)
     
     # Performing NLP using spaCy
