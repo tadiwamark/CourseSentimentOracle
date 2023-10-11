@@ -70,7 +70,7 @@ def main():
                         if openai.api_key:
                             conversation = [
                                 {"role": "system", "content": "You are a helpful assistant. When asked about a review, respond with either 'positive' or 'negative' based on its sentiment."},
-                                {"role": "user", "content": f"Is this review positive or negative? '{preprocessed_text}'"}
+                                {"role": "user", "content": f"Is this review positive or negative? '{selected_review}'"}
                             ]
                             try:
                                 response = openai.ChatCompletion.create(
