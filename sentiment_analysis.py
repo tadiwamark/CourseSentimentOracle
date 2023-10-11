@@ -120,8 +120,8 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
         
 
             sentiment_result = response_content[0].replace("Sentiment:", "").strip()
-            keywords = response_content[1].replace("Keywords:", "").split(',')
-            entities = response_content[2].replace("Entities:", "").split(',')
+            entities = response_content[1].replace("Entities:", "").split(',')
+            keywords = response_content[2].replace("Keywords:", "").split(',')
         
             
         
