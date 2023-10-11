@@ -8,6 +8,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import spacy
 from collections import Counter
 import urllib.request
+import tempfile
+
 
 # Load spaCy model
 nlp = spacy.load('en_core_web_sm')
