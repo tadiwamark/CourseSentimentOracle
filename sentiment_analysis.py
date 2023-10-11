@@ -75,13 +75,31 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
             max_tokens=100
         )
         sentiment_result = response['choices'][0]['message']['content']
+
+         # Extracting keywords and entities using GPT 3.5 Turbo
+        conversation_keywords = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"What are the keywords and entities in this review: '{preprocessed_text}'?"}
+        ]
+
+        response_keywords = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=conversation_keywords,
+            temperature=0.5,
+            max_tokens=150
+        )
+
+        keywords_and_entities = response_keywords['choices'][0]['message']['content'].split(', ')
     
-        # Additional NLP Tasks and Features extraction
+        half = len(keywords_and_entities) // 2
+        keywords = keywords_and_entities[:half]
+        entities = keywords_and_entities[half:]
+    
         additional_features = {
             "keywords": keywords,
             "entities": entities
         }
-        
+    
         return sentiment_result, additional_features
 
     except Exception as e:
