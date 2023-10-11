@@ -77,10 +77,10 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
         sentiment_result = response['choices'][0]['message']['content']
 
          # Extracting keywords and entities using GPT 3.5 Turbo
-        conversation_keywords = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"The keywords and entities in this review are: '{preprocessed_text}'?"}
-        ]
+        conversation = [
+        {"role": "system", "content": "You are a helpful assistant. Provide sentiment, keywords, and entities separately."},
+        {"role": "user", "content": f"For the review: '{preprocessed_text}', what is its sentiment? Also, list its keywords and entities."}
+    ]
 
         response_keywords = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -89,15 +89,16 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
             max_tokens=150
         )
 
-        keywords_and_entities = response_keywords['choices'][0]['message']['content'].split(', ')
-    
-        half = len(keywords_and_entities) // 2
-        keywords = keywords_and_entities[:half]
-        entities = keywords_and_entities[half:]
+        response_content = response['choices'][0]['message']['content'].split('\n')
+
+        # Assuming the model returns in the format "Sentiment: ...", "Keywords: ...", "Entities: ..."
+        sentiment_result = response_content[0].replace("Sentiment:", "").strip()
+        keywords = response_content[1].replace("Keywords:", "").split(',')
+        entities = response_content[2].replace("Entities:", "").split(',')
     
         additional_features = {
-            "keywords": keywords,
-            "entities": entities
+            "keywords": [keyword.strip() for keyword in keywords],
+            "entities": [entity.strip() for entity in entities]
         }
     
         return sentiment_result, additional_features
