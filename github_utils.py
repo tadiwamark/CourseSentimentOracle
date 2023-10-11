@@ -4,9 +4,6 @@ import base64
 import io
 
 GITHUB_TOKEN = 'TGtCCVo288s674r7qMTacqARRVo0fUtDw8bBSgEzyLA'
-REPO_OWNER = 'tadiwamark'
-REPO_NAME = 'CourseSentimentOracle'
-FILE_PATH = 'reviews_sentiments.csv'
 
 def get_file_content():
     """Fetch the file content from GitHub repository"""
@@ -21,7 +18,7 @@ def get_file_content():
 
 def update_github_file(new_content):
     """Commit the updated content back to the GitHub repository"""
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
+    url = f"https://github.com/tadiwamark/CourseSentimentOracle/blob/main/reviews_sentiments.csv"
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
     }
