@@ -28,6 +28,8 @@ def main():
     # If both model and tokenizer are uploaded, load them.
     if uploaded_model and uploaded_tokenizer:
         custom_model, tokenizer = load_uploaded_model(uploaded_model, uploaded_tokenizer)
+    else:
+        st.sidebar.warning("To use the 'Uploaded Custom Model' option, you must upload both the model and the tokenizer.")
 
 
     # Define Page Layout
