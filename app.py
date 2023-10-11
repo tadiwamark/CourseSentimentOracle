@@ -4,7 +4,7 @@ import urllib.request
 import tensorflow as tf
 import SessionState  
 from collections import deque
-from sentiment_analysis import analyze_sentiment, additional_nlp_features, preprocess_text, analyze_sentiment_simple, load_uploaded_model
+from sentiment_analysis import additional_nlp_features, preprocess_text, analyze_sentiment_simple, load_uploaded_model
 from visualization import display_visualizations
 from feedback import collect_feedback
 from user_interface import show_instructions
