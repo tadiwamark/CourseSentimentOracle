@@ -40,19 +40,11 @@ TRUNC_TYPE = 'post'
 PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
 
-def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
-    """Analyze sentiment using the provided model and tokenizer."""
-    # If tokenizer is not provided, use the default one
-    if tokenizer is None:
-        with open('tokenizer.pickle', 'rb') as handle:
-            tokenizer = pickle.load(handle)
 
-    # Use the default custom_model if no model is passed
-    if model is None:
-        model = custom_model
-    """Sentiment Analysis using GPT-3.5 Turbo."""
+def analyze_sentiment_simple(review_text):
+    # Preprocess the review text
     preprocessed_text = preprocess_text(review_text)
-    
+
     # Performing NLP using spaCy
     doc = nlp(preprocessed_text)
 
@@ -62,9 +54,23 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Extracting keywords using noun chunks
     keywords = [chunk.text for chunk in doc.noun_chunks]
 
+    # Tokenize the preprocessed text
+    # If tokenizer is not provided, use the default one
+    if tokenizer is None:
+        with open('tokenizer.pickle', 'rb') as handle:
+            tokenizer = pickle.load(handle)
+    sequence = tokenizer.texts_to_sequences([preprocessed_text])
 
+    # Check if tokenizer returned an empty list
+    if not sequence or not sequence[0]:
+        return "Review contains words not seen during training. Unable to process."
 
-    return sentiment_result, additional_features
+    # Pad the sequence
+    padded_sequence = pad_sequences(sequence, maxlen=MAX_LEN, padding=PADDING_TYPE, truncating=TRUNC_TYPE)
+
+    # Predict the sentiment
+    sentiment_result = custom_model.predict(padded_sequence)
+    return sentiment_result, keywords, entities
 
 
 def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
