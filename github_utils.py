@@ -3,7 +3,7 @@ import pandas as pd
 import base64
 import io
 
-GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'
+GITHUB_TOKEN = 'TGtCCVo288s674r7qMTacqARRVo0fUtDw8bBSgEzyLA'
 REPO_OWNER = 'tadiwamark'
 REPO_NAME = 'CourseSentimentOracle'
 FILE_PATH = 'reviews_sentiments.csv'
