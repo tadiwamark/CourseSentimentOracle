@@ -5,7 +5,6 @@ import tensorflow as tf
 import SessionState  
 from collections import deque
 from sentiment_analysis import additional_nlp_features, preprocess_text, analyze_sentiment_simple, load_uploaded_model
-from github_utils import append_to_csv_and_commit
 from visualization import display_visualizations
 from feedback import collect_feedback
 from user_interface import show_instructions
@@ -95,9 +94,6 @@ def main():
                         sentiment = analyze_sentiment_simple(selected_review, custom_model, tokenizer)
                         st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
                 
-                    # After determining sentiment, append review, sentiment and model choice to GitHub
-                    if sentiment:  # if sentiment was successfully determined
-                        append_to_csv_and_commit(selected_review, sentiment, model_choice)
 
     
             else:
