@@ -15,7 +15,14 @@ nlp = spacy.load('en_core_web_sm')
 # Load pre-fitted tokenizer
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
-
+    
+def load_uploaded_model(model_file, tokenizer_file):
+    """Loads a model and tokenizer uploaded by the user."""
+    with open(tokenizer_file, 'rb') as handle:
+        tokenizer = pickle.load(handle)
+    model = tf.keras.models.load_model(model_file)
+    return model, tokenizer
+    
 # Load custom model
 def load_model_from_github(url):
     filename = url.split('/')[-1]
@@ -33,7 +40,11 @@ TRUNC_TYPE = 'post'
 PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
 
-def analyze_sentiment(review_text):
+def analyze_sentiment_simple(review_text, model=None, tokenizer=default_tokenizer):
+    """Analyze sentiment using the provided model and tokenizer."""
+    # Use the default custom_model if no model is passed
+    if model is None:
+        model = custom_model
     """Sentiment Analysis using GPT-3.5 Turbo."""
     preprocessed_text = preprocess_text(review_text)
     
