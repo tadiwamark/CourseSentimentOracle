@@ -48,31 +48,31 @@ def main():
             else:
                 st.warning("Review field is empty!")
 
-   elif page == 'Analysis':
-        st.title('Real-time Review Analysis')
-
-        model_choices = ['GPT-3.5 Turbo', 'Simple Model']
-        if uploaded_model and uploaded_tokenizer:
-            model_choices.append('Uploaded Custom Model')
-        
-        model_choice = st.selectbox('Choose a model', model_choices)
-
-        if st.session_state.get('reviews'):
-            selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(st.session_state.reviews))), format_func=lambda x: st.session_state.reviews[x])
-            selected_review = st.session_state.reviews[selected_review_index]
-
-            if st.button("Analyze Review"):
-                if model_choice == 'GPT-3.5 Turbo':
-                    # ... GPT analysis code ...
-                elif model_choice == 'Simple Model':
-                    sentiment = analyze_sentiment_simple(selected_review)
-                    st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
-                elif model_choice == 'Uploaded Custom Model':
-                    sentiment = analyze_sentiment_simple(selected_review, custom_model, tokenizer)
-                    st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
-
-        else:
-            st.warning('No reviews have been submitted yet!')
+       elif page == 'Analysis':
+            st.title('Real-time Review Analysis')
+    
+            model_choices = ['GPT-3.5 Turbo', 'Simple Model']
+            if uploaded_model and uploaded_tokenizer:
+                model_choices.append('Uploaded Custom Model')
+            
+            model_choice = st.selectbox('Choose a model', model_choices)
+    
+            if st.session_state.get('reviews'):
+                selected_review_index = st.selectbox('Select a review to analyze:', list(range(len(st.session_state.reviews))), format_func=lambda x: st.session_state.reviews[x])
+                selected_review = st.session_state.reviews[selected_review_index]
+    
+                if st.button("Analyze Review"):
+                    if model_choice == 'GPT-3.5 Turbo':
+                        # ... GPT analysis code ...
+                    elif model_choice == 'Simple Model':
+                        sentiment = analyze_sentiment_simple(selected_review)
+                        st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
+                    elif model_choice == 'Uploaded Custom Model':
+                        sentiment = analyze_sentiment_simple(selected_review, custom_model, tokenizer)
+                        st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
+    
+            else:
+                st.warning('No reviews have been submitted yet!')
 
     elif page == 'Advanced Analysis':
         # Setup Instructions
