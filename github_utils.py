@@ -10,7 +10,7 @@ FILE_PATH = 'reviews_sentiments.csv'
 
 def get_file_content():
     """Fetch the file content from GitHub repository"""
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
+    url = f"https://github.com/tadiwamark/CourseSentimentOracle/blob/main/reviews_sentiments.csv"
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3.raw"
