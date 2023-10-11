@@ -69,15 +69,15 @@ def main():
                     if model_choice == 'GPT-3.5 Turbo':
                         if openai.api_key:
                             conversation = [
-                                {"role": "system", "content": "You are a helpful assistant."},
-                                {"role": "user", "content": f"The sentiment of this review is: {selected_review}"}
+                                {"role": "system", "content": "You are a helpful assistant. When asked about a review, respond with either 'positive' or 'negative' based on its sentiment."},
+                                {"role": "user", "content": f"Is this review positive or negative? '{preprocessed_text}'"}
                             ]
                             try:
                                 response = openai.ChatCompletion.create(
                                     model="gpt-3.5-turbo",
                                     messages=conversation,
                                     temperature=0.5,
-                                    max_tokens=100
+                                    max_tokens=50
                                 )
                                 st.write("GPT 3.5-Turbo's Response:", response['choices'][0]['message']['content'])
                             except openai.error.OpenAIError as e:
