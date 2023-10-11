@@ -111,7 +111,6 @@ def main():
                 sentiment_result, additional_features = advanced_sentiment_analysis(user_input)
                 if additional_features:  # If no error occurred during sentiment analysis
                     st.success(f'Sentiment Analysis Result: {sentiment_result}')
-                    additional_nlp_features(additional_features)
                     display_visualizations(sentiment_result, additional_features)
                     collect_feedback(user_input, sentiment_result, additional_features)
                 else:
