@@ -5,6 +5,7 @@ import tensorflow as tf
 import SessionState  
 from collections import deque
 from sentiment_analysis import additional_nlp_features, preprocess_text, analyze_sentiment_simple, load_uploaded_model
+from github_utils import append_to_csv_and_commit
 from visualization import display_visualizations
 from feedback import collect_feedback
 from user_interface import show_instructions
@@ -64,6 +65,8 @@ def main():
                 selected_review = st.session_state.reviews[selected_review_index]
     
                 if st.button("Analyze Review"):
+                    sentiment = None  # initialize sentiment variable
+
                     if model_choice == 'GPT-3.5 Turbo':
                         if openai.api_key:
                             conversation = [
@@ -77,17 +80,25 @@ def main():
                                     temperature=0.5,
                                     max_tokens=100
                                 )
-                                st.write("GPT 3.5-Turbo's Response:", response['choices'][0]['message']['content'])
+                                sentiment = response['choices'][0]['message']['content']
+                                st.write("GPT 3.5-Turbo's Response:", sentiment)
                             except openai.error.OpenAIError as e:
                                 st.error(f"Error: {e}")
                         else:
                             st.error("OpenAI API Key is missing. Please enter the API Key.")
+                
                     elif model_choice == 'Simple Model':
                         sentiment = analyze_sentiment_simple(selected_review)
                         st.write(f"Sentiment Analysis Result (using Simple Model): {sentiment}")
+                
                     elif model_choice == 'Uploaded Custom Model':
                         sentiment = analyze_sentiment_simple(selected_review, custom_model, tokenizer)
                         st.write(f"Sentiment Analysis Result (using Uploaded Custom Model): {sentiment}")
+                
+                    # After determining sentiment, append review, sentiment and model choice to GitHub
+                    if sentiment:  # if sentiment was successfully determined
+                        append_to_csv_and_commit(selected_review, sentiment, model_choice)
+
     
             else:
                 st.warning('No reviews have been submitted yet!')   
