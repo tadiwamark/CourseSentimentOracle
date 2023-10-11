@@ -41,7 +41,7 @@ PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
 
 
-def analyze_sentiment_simple(review_text):
+def analyze_sentiment_simple(review_text,tokenizer=None):
     # Preprocess the review text
     preprocessed_text = preprocess_text(review_text)
 
