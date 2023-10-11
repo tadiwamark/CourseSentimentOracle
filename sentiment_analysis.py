@@ -123,10 +123,7 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
             keywords = response_content[1].replace("Keywords:", "").split(',')
             entities = response_content[2].replace("Entities:", "").split(',')
         
-            additional_features = {
-                "keywords:": [keyword.strip() for keyword in keywords],
-                "entities:": [entity.strip() for entity in entities]
-            }
+            
         
 
     elif model == 'simple':
@@ -136,14 +133,14 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
     else:
         raise ValueError(f"Model {model} not supported.")
 
-    return sentiment_result, additional_features
+    return sentiment_result, keywords, entities
 
 
 def additional_nlp_features(features):
     """Display additional NLP features."""
     if features:
         st.subheader("Extracted Keywords:")
-        st.write(", ".join(features.get("keywords", [])))
+        st.write(keywords)
 
         st.subheader("Recognized Entities:")
-        st.write(", ".join(features.get("entities", [])))
+        st.write(entities)
