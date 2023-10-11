@@ -102,28 +102,28 @@ def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
     """
 
     if model == 'gpt-3.5-turbo':
-        # Here, you'd call GPT-3.5 Turbo's API for sentiment analysis.
-        conversation = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"The sentiment of this review is: {review_text}"}
-        ]
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=conversation,
-                temperature=0.5,
-                max_tokens=100
-            )
-            sentiment_result = response['choices'][0]['message']['content']
-            
-            
-            additional_features = {
-                "keywords": [], 
-                "entities": []
-            }
-
-        except openai.error.OpenAIError as e:
-            return str(e), None
+        if openai.api_key:
+            conversation = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"The sentiment of this review is: {review_text}"}
+            ]
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=conversation,
+                    temperature=0.5,
+                    max_tokens=100
+                )
+                sentiment_result = response['choices'][0]['message']['content']
+                
+                
+                additional_features = {
+                    "keywords": [], 
+                    "entities": []
+                }
+    
+            except openai.error.OpenAIError as e:
+                return str(e), None
 
     elif model == 'simple':
         # For the simple model, you'd process the review differently.
