@@ -40,8 +40,13 @@ TRUNC_TYPE = 'post'
 PADDING_TYPE = 'post'
 OOV_TOKEN = "<OOV>"
 
-def analyze_sentiment_simple(review_text, model=None, tokenizer=default_tokenizer):
+def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     """Analyze sentiment using the provided model and tokenizer."""
+    # If tokenizer is not provided, use the default one
+    if tokenizer is None:
+        with open('tokenizer.pickle', 'rb') as handle:
+            tokenizer = pickle.load(handle)
+
     # Use the default custom_model if no model is passed
     if model is None:
         model = custom_model
