@@ -108,7 +108,7 @@ def main():
         if st.button('Analyze'):
             if user_input:
                 # Sentiment Analysis
-                sentiment_result, additional_features = analyze_sentiment(user_input)
+                sentiment_result, additional_features = advanced_sentiment_analysis(user_input)
                 if additional_features:  # If no error occurred during sentiment analysis
                     st.success(f'Sentiment Analysis Result: {sentiment_result}')
                     additional_nlp_features(additional_features)
