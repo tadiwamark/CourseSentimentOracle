@@ -13,6 +13,7 @@ def get_file_content():
         "Accept": "application/vnd.github.v3.raw"
     }
     response = requests.get(url, headers=headers)
+    print(response.text)
     csv_content = base64.b64decode(response.json()['content']).decode('utf-8')
     return csv_content
 
@@ -35,7 +36,9 @@ def update_github_file(new_content):
         "content": new_content_encoded,
         "sha": sha
     }
+    print(response.text)
     response = requests.put(url, headers=headers, json=payload)
+    
     return response
 
 def append_to_csv_and_commit(review, sentiment, model):
