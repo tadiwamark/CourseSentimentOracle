@@ -58,7 +58,7 @@ To set up and run the application, follow the steps below:
 
 ## Usage
 
-**Web App:** Access the app at [https://coursesentimentoracle.streamlit.app/](https://coursesentimentoracle.streamlit.app/)
+**Web App:** Access the app at https://coursesentimentoracle-ecq5x62djgqsojx75jyx7z.streamlit.app/
 
 ## Model Architecture
 
