@@ -62,7 +62,7 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
     # Extracting keywords using noun chunks
     keywords = [chunk.text for chunk in doc.noun_chunks]
 
-    # Analyzing sentiment using OpenAI
+    # Analyzing sentiment using GPT 3.5 Turbo
     conversation = [
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": f"The sentiment of this review is: {preprocessed_text}"}
