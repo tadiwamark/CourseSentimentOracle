@@ -88,7 +88,51 @@ def analyze_sentiment_simple(review_text, model=None, tokenizer=None):
         return str(e), None  # Returning error string and None for additional_features if there is an exception
 
 
+def advanced_sentiment_analysis(review_text, model='gpt-3.5-turbo'):
+    """
+    Perform advanced sentiment analysis based on the selected model.
 
+    Parameters:
+    - review_text (str): The review text to analyze.
+    - model (str): The model to use for analysis, either 'gpt-3.5-turbo' or 'simple'.
+
+    Returns:
+    - sentiment_result (str): The resulting sentiment.
+    - additional_features (dict): Any additional features extracted, like entities or keywords.
+    """
+
+    if model == 'gpt-3.5-turbo':
+        # Here, you'd call GPT-3.5 Turbo's API for sentiment analysis.
+        conversation = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"The sentiment of this review is: {review_text}"}
+        ]
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=conversation,
+                temperature=0.5,
+                max_tokens=100
+            )
+            sentiment_result = response['choices'][0]['message']['content']
+            
+            
+            additional_features = {
+                "keywords": [], 
+                "entities": []
+            }
+
+        except openai.error.OpenAIError as e:
+            return str(e), None
+
+    elif model == 'simple':
+        # For the simple model, you'd process the review differently.
+        sentiment_result ,additional_features = analyze_sentiment_simple(review_text)
+        
+    else:
+        raise ValueError(f"Model {model} not supported.")
+
+    return sentiment_result, additional_features
 
 
 def additional_nlp_features(features):
